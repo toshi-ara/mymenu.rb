@@ -1,0 +1,31 @@
+* DESCRIPTION
+A program to select application from menu list with peco.
+
+** Usage
+*** select Terminal Emulator
+Set "XTERM" variable
+- xterm/urxvt/mlterm are OK.
+- gnome-terminal/lxterminal are NG.
+
+*** preparation of "~/.mymenu" file
+Example of .mymenu
+
+#+BEGIN_EXAMPLE
+FD, gnome-terminal -e fd
+R, lxterminal -e R
+leafpad
+#+END_EXAMPLE
+
+Plese describe as (menu), (command)
+- (menu) is display.
+- if (command) is ommited, (menu) is used as (command).
+- A line starting with "#" or blank line is ignored (comment line).
+
+** Requirements
+1. Ruby
+2. peco
+3. terminal emulator (xterm/urxvt/mlterm)
+
+** License
+GPL version 2
+

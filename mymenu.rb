@@ -7,24 +7,24 @@ PECO = File.expand_path "/usr/bin/peco"
 # terminal emulator (xterm/urxvt/mlterm)
 XTERM = "mlterm"
 
-USER = ENV['USER']
-filename="/home/#{USER}/.mymenu"
+# menu list
+menufile = File.expand_path "~/.mymenu"
 
 
 require 'tempfile'
 
-class Launcher
-  def initialize(filename)
-    @filename = filename
-    @appfilename = Tempfile.new("tmpnew").path
+class MyMenu
+  def initialize(menufile)
+    @menufile = menufile
+    @appfilepath = Tempfile.new("tmpnew").path
     @hash = Hash.new
   end
 
   protected
 
   def set_hash_and_list
-    io1 = File.open(@filename, "r")     # filelist
-    io2 = File.open(@appfilename, "w")  # list of application name
+    io1 = File.open(@menufile, "r")     # filelist
+    io2 = File.open(@appfilepath, "w")  # list of application name
 
     io1.each {|line|
       line.strip!
@@ -41,9 +41,9 @@ class Launcher
   end
 
   def exec_peco
-    out = Tempfile.new "peco-out"
-    err = Tempfile.new "peco-err"
-    system "#{XTERM} -e sh -c '#{PECO} #{@appfilename} > #{out.path} 2> #{err.path}'"
+    out = Tempfile.new("peco-out")
+    err = Tempfile.new("peco-err")
+    system "#{XTERM} -e sh -c '#{PECO} #{@appfilepath} > #{out.path} 2> #{err.path}'"
 
     res = `cat #{out.path}`
     if res != ""
@@ -54,12 +54,13 @@ class Launcher
 
   public
 
-  def exec_launcher
+  def exec_MyMenu
     self.set_hash_and_list
     self.exec_peco
   end
 end
 
-launchar = Launcher.new(filename)
-launchar.exec_launcher
+
+mymenu = MyMenu.new(menufile)
+mymenu.exec_MyMenu
 

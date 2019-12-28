@@ -8,7 +8,7 @@ PECO = File.expand_path "/usr/bin/peco"
 XTERM = "mlterm"
 
 # menu list
-menufile = File.expand_path "~/.mymenu"
+menufile = File.expand_path "~/.config/mymenu"
 
 
 require 'tempfile'
